@@ -6,7 +6,7 @@ RUN apk add --no-cache openssl
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 COPY . .
 
 # Generate Prisma Client (ignore connection error during build)
@@ -28,7 +28,7 @@ ENV NODE_ENV=production
 RUN mkdir -p /app/logs && chown -R node:node /app
 
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --only=production
 
 # Copy built application
 COPY --from=builder --chown=node:node /app/dist ./dist
